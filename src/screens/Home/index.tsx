@@ -12,22 +12,28 @@ import { styles } from './styles'
 
 export function Home() {
   const [participants, setParticipants] = useState<string[]>([])
-  const [participaneName, setParticipaneName] = useState('')
+  const [participantName, setParticipantName] = useState('')
 
   function handleParticipantAdd() {
-    if (participants.includes(participaneName)) {
+    if (participants.includes(participantName)) {
       return Alert.alert('Partipant already added')
     }
 
-    setParticipants((state) => [...state, participaneName])
-    setParticipaneName('')
+    setParticipants((state) => [...state, participantName])
+    setParticipantName('')
+  }
+
+  function removeParticipant(name: string) {
+    setParticipants((state) =>
+      state.filter((participant) => participant !== name)
+    )
   }
 
   function handleRemoveParticipant(name: string) {
     Alert.alert('Remove', `Remove participanet ${name}?`, [
       {
         text: 'yes',
-        onPress: () => Alert.alert('Deleted'),
+        onPress: () => removeParticipant(name),
       },
       {
         text: 'no',
@@ -47,8 +53,8 @@ export function Home() {
           style={styles.input}
           placeholder='Nome do participante'
           placeholderTextColor='#6B6B6B'
-          onChangeText={setParticipaneName}
-          value={participaneName}
+          onChangeText={setParticipantName}
+          value={participantName}
         />
 
         <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
