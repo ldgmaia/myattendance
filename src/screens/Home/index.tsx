@@ -1,32 +1,39 @@
-import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { useState } from 'react'
+import {
+  Alert,
+  FlatList,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { Participant } from '../../components/Participant'
 import { styles } from './styles'
 
 export function Home() {
-  const participants = [
-    'Diego',
-    'Diego1',
-    'Diego2',
-    'Diego3',
-    'Diego4',
-    'Diego5',
-    'Diego6',
-    'Diego7',
-    'Diego8',
-    'Diego9',
-    'Diego10',
-    'Diego11',
-    'Diego12',
-    'Diego13',
-    'Diego14',
-  ]
+  const [participants, setParticipants] = useState<string[]>([])
+  const [participaneName, setParticipaneName] = useState('')
 
   function handleParticipantAdd() {
-    console.log('you clicked add')
+    if (participants.includes(participaneName)) {
+      return Alert.alert('Partipant already added')
+    }
+
+    setParticipants((state) => [...state, participaneName])
+    setParticipaneName('')
   }
 
-  function handleRemoveParticipant() {
-    console.log('You clicked to remove')
+  function handleRemoveParticipant(name: string) {
+    Alert.alert('Remove', `Remove participanet ${name}?`, [
+      {
+        text: 'yes',
+        onPress: () => Alert.alert('Deleted'),
+      },
+      {
+        text: 'no',
+        style: 'cancel',
+      },
+    ])
   }
 
   return (
@@ -40,6 +47,8 @@ export function Home() {
           style={styles.input}
           placeholder='Nome do participante'
           placeholderTextColor='#6B6B6B'
+          onChangeText={setParticipaneName}
+          value={participaneName}
         />
 
         <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
@@ -54,7 +63,7 @@ export function Home() {
           <Participant
             key={item}
             name={item}
-            onRemove={handleRemoveParticipant}
+            onRemove={() => handleRemoveParticipant(item)}
           />
         )}
         showsVerticalScrollIndicator={false}
