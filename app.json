@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2A74DB"
-      }
+      },
+      "package": "com.ldgmaia.myattendance"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fbaaa833-0c12-45e2-9404-f89f961786fa"
+      }
     }
   }
 }
